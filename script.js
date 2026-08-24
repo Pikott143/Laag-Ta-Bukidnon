@@ -1,155 +1,166 @@
-// ========================================
-// MOBILE MENU
-// ========================================
+/* =====================================================
+   MOBILE MENU
+===================================================== */
 
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.querySelector(".nav-links");
+const menuButton =
+    document.getElementById("menuButton");
 
-menuBtn.addEventListener("click", () => {
+const closeButton =
+    document.getElementById("closeButton");
 
-    navLinks.classList.toggle("show");
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+
+menuButton.addEventListener("click", () => {
+
+    mobileMenu.classList.add("active");
 
 });
 
 
-// Close menu after clicking a link
+closeButton.addEventListener("click", () => {
 
-const links = document.querySelectorAll(".nav-links a");
+    mobileMenu.classList.remove("active");
 
-links.forEach(link => {
+});
+
+
+/* CLOSE MENU AFTER CLICKING LINK */
+
+const mobileLinks =
+    document.querySelectorAll(".mobile-menu a");
+
+
+mobileLinks.forEach(link => {
 
     link.addEventListener("click", () => {
 
-        navLinks.classList.remove("show");
+        mobileMenu.classList.remove("active");
 
     });
 
 });
 
 
-// ========================================
-// ACTIVE NAVIGATION
-// ========================================
 
-const sections = document.querySelectorAll("section");
-const navItems = document.querySelectorAll(".nav-links a");
+/* =====================================================
+   EXPLORE BUTTON
+===================================================== */
 
-window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    sections.forEach(section => {
-
-        const sectionTop = section.offsetTop - 150;
-
-        if (window.scrollY >= sectionTop) {
-            current = section.getAttribute("id");
-        }
-
-    });
+const exploreButton =
+    document.getElementById("exploreButton");
 
 
-    navItems.forEach(link => {
+exploreButton.addEventListener("click", () => {
 
-        link.classList.remove("active");
-
-        if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-        }
-
-    });
-
-});
-
-
-// ========================================
-// HERO NUMBER INTERACTION
-// ========================================
-
-const heroNumbers = document.querySelectorAll(".hero-number");
-
-heroNumbers.forEach(item => {
-
-    item.addEventListener("click", () => {
-
-        heroNumbers.forEach(number => {
-            number.classList.remove("active");
+    document
+        .getElementById("destinations")
+        .scrollIntoView({
+            behavior: "smooth"
         });
 
-        item.classList.add("active");
-
-    });
-
 });
 
 
-// ========================================
-// SCROLL REVEAL
-// ========================================
 
-const revealElements = document.querySelectorAll(
-    ".section-title, .about-content, .destination-card, .adventure-content, .mini-card, .guide-left, .guide-right"
-);
+/* =====================================================
+   VIEW ALL DESTINATIONS
+===================================================== */
 
-const observer = new IntersectionObserver(
-    (entries) => {
+const viewAllButton =
+    document.getElementById("viewAll");
 
-        entries.forEach(entry => {
+const hiddenCards =
+    document.querySelectorAll(".hidden-card");
 
-            if (entry.isIntersecting) {
+let expanded = false;
 
-                entry.target.classList.add("show");
 
-            }
+viewAllButton.addEventListener("click", () => {
 
-        });
+    expanded = !expanded;
 
-    },
-    {
-        threshold: 0.15
+
+    hiddenCards.forEach(card => {
+
+        card.style.display =
+            expanded ? "block" : "";
+
+    });
+
+
+    if (expanded) {
+
+        viewAllButton.innerHTML =
+            'SHOW LESS <span>↑</span>';
+
+    } else {
+
+        viewAllButton.innerHTML =
+            'VIEW ALL <span>→</span>';
+
     }
-);
-
-
-revealElements.forEach(element => {
-
-    element.classList.add("reveal");
-
-    observer.observe(element);
 
 });
 
 
-// ========================================
-// WATCH BUTTON
-// ========================================
 
-const watchBtn = document.getElementById("watchBtn");
+/* =====================================================
+   PLAN MODAL
+===================================================== */
 
-watchBtn.addEventListener("click", () => {
+const modal =
+    document.getElementById("modal");
 
-    alert(
-        "Bukidnon Journey\n\n" +
-        "Adventure awaits. More travel videos coming soon!"
-    );
+const letsGo =
+    document.getElementById("letsGo");
+
+const modalClose =
+    document.getElementById("modalClose");
+
+
+letsGo.addEventListener("click", () => {
+
+    modal.classList.add("active");
 
 });
 
 
-// ========================================
-// MINI PLAY BUTTONS
-// ========================================
+modalClose.addEventListener("click", () => {
 
-const miniPlayButtons = document.querySelectorAll(".mini-play");
+    modal.classList.remove("active");
 
-miniPlayButtons.forEach(button => {
+});
 
-    button.addEventListener("click", () => {
 
-        alert(
-            "Travel video coming soon!"
-        );
 
-    });
+/* CLOSE MODAL OUTSIDE */
+
+modal.addEventListener("click", event => {
+
+    if (event.target === modal) {
+
+        modal.classList.remove("active");
+
+    }
+
+});
+
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+        mobileMenu.classList.remove("active");
+
+        modal.classList.remove("active");
+
+    }
 
 });
